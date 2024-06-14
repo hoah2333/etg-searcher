@@ -1,0 +1,44 @@
+.item-block-container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+
+	.item-block {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0.5rem;
+		gap: 0.5rem;
+		height: 100%;
+		background-color: #bfb9b9;
+
+		.icon {
+            display: flex;
+            align-items: center;
+            width: 2.5rem;
+            min-height: 2.5rem;
+		}
+		img {
+			width: 100%;
+			image-rendering: pixelated;
+		}
+
+		a {
+			color: black;
+			text-decoration: none;
+			&::before {
+				content: "";
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+			}
+		}
+	}
+}
