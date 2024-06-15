@@ -1,7 +1,7 @@
 <div id="main-wrapper">
-	<slot />
+    <slot />
 </div>
 
 <style lang="scss" type="text/scss">
-	@import './layout';
+    @import "./layout";
 </style>
