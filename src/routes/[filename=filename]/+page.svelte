@@ -4,8 +4,17 @@
     import pinyin from "tiny-pinyin";
 
     const pagename: string = $page.params.filename;
+    const imgServer: string = "https://7bye.com/hoah/i/etg/";
+
     let keyNames: string[] = [];
     let searchText: string = "";
+    let isFilterCollpsed: boolean = true;
+
+    let filterNames: Record<string, string[]> = {
+        quality: [],
+        color: [],
+        type: []
+    };
 
     resetKeys();
 
@@ -35,33 +44,156 @@
                 return "";
             }
         });
-        keyNames = searchKeys;
+        let filterKeys: Record<string, string[]> = {
+            quality: [],
+            color: [],
+            type: []
+        };
+
+        keyFilter("quality", "quality");
+        keyFilter("color", "colors");
+        keyFilter("type", "shapes");
+
+        function keyFilter(type: string, fileType: string) {
+            filterKeys[type] = keyNames.filter((key) => {
+                if (filterNames[type].length == 0) {
+                    return key;
+                } else if (fileData(pagename)[key][fileType] == undefined) {
+                    return "";
+                } else if (fileData(pagename)[key][fileType].includes(filterNames[type])) {
+                    return key;
+                } else {
+                    return "";
+                }
+            });
+        }
+        keyNames = searchKeys.filter(
+            (key) =>
+                filterKeys.quality.includes(key) &&
+                filterKeys.color.includes(key) &&
+                filterKeys.type.includes(key)
+        );
     }
+
+    let lastClicked: Record<string, EventTarget | null> = {
+        quality: null,
+        color: null,
+        type: null
+    };
 </script>
 
-<input
-    class="search-box"
-    placeholder="强大的名字过滤器"
-    type="text"
-    bind:value={searchText}
-    on:input={searchFunc}
-/>
+<div class="search-container">
+    <button
+        class="filter-collapsible {isFilterCollpsed ? 'collapsed' : ''}"
+        on:click={() => (isFilterCollpsed = !isFilterCollpsed)}>条件</button
+    >
+    <input
+        class="search-box"
+        placeholder="强大的名字过滤器"
+        type="text"
+        bind:value={searchText}
+        on:input={searchFunc}
+    />
+    <div class="filter {isFilterCollpsed ? 'collapsed' : ''}">
+        <div class="quality">
+            {#each ["S", "A", "B", "C", "D", "N"] as quality}
+                <input
+                    type="radio"
+                    name={quality}
+                    id={quality}
+                    value={quality}
+                    bind:group={filterNames.quality}
+                    on:click={(event) => {
+                        if (lastClicked.quality === event.target) {
+                            filterNames.quality = [];
+                            lastClicked.quality = null;
+                            searchFunc();
+                        } else {
+                            lastClicked.quality = event.target;
+                        }
+                    }}
+                    on:change={searchFunc}
+                /><label for={quality}>
+                    <img src="{imgServer}/qualities/{quality}.png" alt={quality} />
+                </label>
+            {/each}
+        </div>
+        <div class="color">
+            {#each ["black", "brown", "gray", "white", "red", "green", "blue", "yellow", "purple"] as color}
+                <input
+                    type="checkbox"
+                    name={color}
+                    id={color}
+                    value={color}
+                    bind:group={filterNames.color}
+                    on:change={searchFunc}
+                /><label for={color}>
+                    <span class="color-block {color}"></span>
+                </label>
+            {/each}
+        </div>
+        <div class="type">
+            {#if pagename == "gun"}
+                {#each ["gun", "bow", "bullet", "fork", "sword", "other"] as type}
+                    <input
+                        type="radio"
+                        name={type}
+                        id={type}
+                        value={type}
+                        bind:group={filterNames.type}
+                        on:click={(event) => {
+                            if (lastClicked.type === event.target) {
+                                filterNames.type = [];
+                                lastClicked.type = null;
+                                searchFunc();
+                            } else {
+                                lastClicked.type = event.target;
+                            }
+                        }}
+                        on:change={searchFunc}
+                    /><label for={type}>
+                        <img
+                            src="{imgServer}/shapes/{type == 'other' ? '' : 'gun-'}{type}.png"
+                            alt={type}
+                        />
+                    </label>
+                {/each}
+            {/if}
+            {#if pagename == "item"}
+                {#each ["heart", "bullet", "ring", "ammolet", "rect", "bottle", "shoe", "circle", "other"] as type}
+                    <button class="item-block">
+                        <img
+                            src="{imgServer}/shapes/{type == 'other' ? '' : 'item-'}{type}.png"
+                            alt={type}
+                        />
+                    </button>
+                {/each}
+            {/if}
+        </div>
+    </div>
+</div>
 
 <div class="item-block-container">
-    {#each keyNames as key, index}
-        <div class="item-block">
+    {#each keyNames as key}
+        <div
+            class="item-block {fileData(pagename)[key].colors == undefined
+                ? ''
+                : fileData(pagename)[key].colors.split(',')[
+                      Math.floor(Math.random() * fileData(pagename)[key].colors.split(',').length)
+                  ]}"
+        >
             <div class="icon">
                 <img
-                    src="https://7bye.com/hoah/i/etg/{fileData(pagename)
+                    src="{imgServer}{fileData(pagename)
                         [key].icon.replace(/(%[0-9]{2})/g, '-')
                         .replace(/\.+|(\-\.)/g, '.')
-                        .replace(/\/(\-)/g, '$1')}"
+                        .replace(/(\/)\-/g, '$1')}"
                     alt={fileData(pagename)[key].name}
                 />
             </div>
             <a
                 href="http://etg-xd.wikidot.com/{key
-                    .replace(/[.'!&\-\\/\(\) ]+/g, '-')
+                    .replace(/[.'!&\-\\/\(\)\+ ]+/g, '-')
                     .toLowerCase()}"
                 target="_blank"
                 rel="noopener noreferrer"
