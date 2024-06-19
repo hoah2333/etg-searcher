@@ -83,10 +83,12 @@
 </script>
 
 <div class="search-container">
-    <button
-        class="filter-collapsible {isFilterCollpsed ? 'collapsed' : ''}"
-        on:click={() => (isFilterCollpsed = !isFilterCollpsed)}>条件</button
-    >
+    {#if pagename == "gun" || pagename == "item"}
+        <button
+            class="filter-collapsible {isFilterCollpsed ? 'collapsed' : ''}"
+            on:click={() => (isFilterCollpsed = !isFilterCollpsed)}>条件</button
+        >
+    {/if}
     <input
         class="search-box"
         placeholder="强大的名字过滤器"
@@ -94,83 +96,101 @@
         bind:value={searchText}
         on:input={searchFunc}
     />
-    <div class="filter {isFilterCollpsed ? 'collapsed' : ''}">
-        <div class="quality">
-            {#each ["S", "A", "B", "C", "D", "N"] as quality}
-                <input
-                    type="radio"
-                    name={quality}
-                    id={quality}
-                    value={quality}
-                    bind:group={filterNames.quality}
-                    on:click={(event) => {
-                        if (lastClicked.quality === event.target) {
-                            filterNames.quality = [];
-                            lastClicked.quality = null;
-                            searchFunc();
-                        } else {
-                            lastClicked.quality = event.target;
-                        }
-                    }}
-                    on:change={searchFunc}
-                /><label for={quality}>
-                    <img src="{imgServer}/qualities/{quality}.png" alt={quality} />
-                </label>
-            {/each}
-        </div>
-        <div class="color">
-            {#each ["black", "brown", "gray", "white", "red", "green", "blue", "yellow", "purple"] as color}
-                <input
-                    type="checkbox"
-                    name={color}
-                    id={color}
-                    value={color}
-                    bind:group={filterNames.color}
-                    on:change={searchFunc}
-                /><label for={color}>
-                    <span class="color-block {color}"></span>
-                </label>
-            {/each}
-        </div>
-        <div class="type">
-            {#if pagename == "gun"}
-                {#each ["gun", "bow", "bullet", "fork", "sword", "other"] as type}
+    {#if pagename == "gun" || pagename == "item"}
+        <div class="filter {isFilterCollpsed ? 'collapsed' : ''}">
+            <div class="quality">
+                {#each ["S", "A", "B", "C", "D", "N"] as quality}
                     <input
                         type="radio"
-                        name={type}
-                        id={type}
-                        value={type}
-                        bind:group={filterNames.type}
+                        name={quality}
+                        id={quality}
+                        value={quality}
+                        bind:group={filterNames.quality}
                         on:click={(event) => {
-                            if (lastClicked.type === event.target) {
-                                filterNames.type = [];
-                                lastClicked.type = null;
+                            if (lastClicked.quality === event.target) {
+                                filterNames.quality = [];
+                                lastClicked.quality = null;
                                 searchFunc();
                             } else {
-                                lastClicked.type = event.target;
+                                lastClicked.quality = event.target;
                             }
                         }}
                         on:change={searchFunc}
-                    /><label for={type}>
-                        <img
-                            src="{imgServer}/shapes/{type == 'other' ? '' : 'gun-'}{type}.png"
-                            alt={type}
-                        />
+                    /><label for={quality}>
+                        <img src="{imgServer}/qualities/{quality}.png" alt={quality} />
                     </label>
                 {/each}
-            {/if}
-            {#if pagename == "item"}
-                {#each ["heart", "bullet", "ring", "ammolet", "rect", "bottle", "shoe", "circle", "other"] as type}
-                    <button class="item-block">
-                        <img
-                            src="{imgServer}/shapes/{type == 'other' ? '' : 'item-'}{type}.png"
-                            alt={type}
-                        />
-                    </button>
+            </div>
+            <div class="color">
+                {#each ["black", "brown", "gray", "white", "red", "green", "blue", "yellow", "purple"] as color}
+                    <input
+                        type="checkbox"
+                        name={color}
+                        id={color}
+                        value={color}
+                        bind:group={filterNames.color}
+                        on:change={searchFunc}
+                    /><label for={color}>
+                        <span class="color-block {color}"></span>
+                    </label>
                 {/each}
-            {/if}
+            </div>
+            <div class="type">
+                {#if pagename == "gun"}
+                    {#each ["gun", "bow", "bullet", "fork", "sword", "other"] as type}
+                        <input
+                            type="radio"
+                            name={type}
+                            id={type}
+                            value={type}
+                            bind:group={filterNames.type}
+                            on:click={(event) => {
+                                if (lastClicked.type === event.target) {
+                                    filterNames.type = [];
+                                    lastClicked.type = null;
+                                    searchFunc();
+                                } else {
+                                    lastClicked.type = event.target;
+                                }
+                            }}
+                            on:change={searchFunc}
+                        /><label for={type}>
+                            <img
+                                src="{imgServer}/shapes/{type == 'other' ? '' : 'gun-'}{type}.png"
+                                alt={type}
+                            />
+                        </label>
+                    {/each}
+                {/if}
+                {#if pagename == "item"}
+                    {#each ["heart", "bullet", "ring", "ammolet", "rect", "bottle", "shoe", "circle", "other"] as type}
+                        <input
+                            type="radio"
+                            name={type}
+                            id={type}
+                            value={type}
+                            bind:group={filterNames.type}
+                            on:click={(event) => {
+                                if (lastClicked.type === event.target) {
+                                    filterNames.type = [];
+                                    lastClicked.type = null;
+                                    searchFunc();
+                                } else {
+                                    lastClicked.type = event.target;
+                                }
+                            }}
+                            on:change={searchFunc}
+                        /><label for={type}>
+                            <img
+                                src="{imgServer}/shapes/{type == 'other' ? '' : 'item-'}{type}.png"
+                                alt={type}
+                            />
+                        </label>
+                    {/each}
+                {/if}
+            </div>
         </div>
-    </div>
+    {/if}
 </div>
 
 <div class="item-block-container">
