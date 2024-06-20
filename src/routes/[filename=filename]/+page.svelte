@@ -219,7 +219,7 @@
     <h3>{pagenameDesc}</h3>
 </div>
 
-<div class="item-block-container">
+<div class="item-block-container {pagename}">
     {#each keyNames as key}
         <div
             class="item-block {fileData(pagename)[key].colors == undefined
@@ -230,10 +230,17 @@
         >
             <div class="icon">
                 <img
-                    src="{imgServer}{fileData(pagename)
-                        [key].icon.replace(/(%[0-9]{2})/g, '-')
-                        .replace(/\.+|(\-\.)/g, '.')
-                        .replace(/(\/)\-/g, '$1')}"
+                    src="{imgServer}{fileData(pagename)[key].icon == undefined
+                        ? fileData(pagename)[key].local_icon == undefined
+                            ? ''
+                            : fileData(pagename)
+                                  [key].local_icon.replace(/(%[0-9]{2})/g, '-')
+                                  .replace(/\.+|(\-\.)/g, '.')
+                                  .replace(/(\/)\-/g, '$1')
+                        : fileData(pagename)
+                              [key].icon.replace(/(%[0-9]{2})/g, '-')
+                              .replace(/\.+|(\-\.)/g, '.')
+                              .replace(/(\/)\-/g, '$1')}"
                     alt={fileData(pagename)[key].name}
                 />
             </div>

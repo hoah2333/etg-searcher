@@ -135,6 +135,15 @@
             align-items: center;
             height: 2.5rem;
 
+            @at-root {
+                .gungeoneer#{&},
+                .boss#{&},
+                .shrine#{&},
+                .npc#{&} {
+                    height: 5rem;
+                }
+            }
+
             img {
                 height: 100%;
                 image-rendering: pixelated;
