@@ -16,6 +16,27 @@
         type: []
     };
 
+    let pagenameDesc: string = (() => {
+        switch (pagename) {
+            case "gungeoneer":
+                return "角色";
+            case "gun":
+                return "枪";
+            case "item":
+                return "道具";
+            case "enemy":
+                return "敌人";
+            case "boss":
+                return "BOSS";
+            case "shrine":
+                return "雕像";
+            case "npc":
+                return "NPC";
+            default:
+                return "";
+        }
+    })();
+
     resetKeys();
 
     function resetKeys() {
@@ -191,6 +212,11 @@
             </div>
         </div>
     {/if}
+</div>
+
+<div class="header">
+    <img src="{imgServer}/list-header.png" alt="list header" />
+    <h3>{pagenameDesc}</h3>
 </div>
 
 <div class="item-block-container">

@@ -86,6 +86,22 @@
     }
 }
 
+.header {
+    display: flex;
+    position: relative;
+    margin: 0.5rem 0 2rem 0;
+
+    h3 {
+        position: absolute;
+        margin: 0;
+        left: 50%;
+        top: -0.75rem;
+        translate: -50%;
+        background-color: #a8a59e;
+        padding: 0.5rem;
+    }
+}
+
 .item-block-container {
     width: 100%;
     display: flex;
@@ -117,13 +133,12 @@
         .icon {
             display: flex;
             align-items: center;
-            width: 2.5rem;
-            min-height: 2.5rem;
-        }
+            height: 2.5rem;
 
-        img {
-            width: 100%;
-            image-rendering: pixelated;
+            img {
+                height: 100%;
+                image-rendering: pixelated;
+            }
         }
 
         a {
