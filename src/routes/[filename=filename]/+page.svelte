@@ -75,6 +75,12 @@
         keyFilter("color", "colors");
         keyFilter("type", "shapes");
 
+        /**
+         * A filter returns string key in files.
+         *
+         * @param type refers to keys in filterKeys ("quality" || "color" || "type")
+         * @param fileType refers to keys in files ("quality" || "colors" || "shapes")
+         */
         function keyFilter(type: string, fileType: string) {
             filterKeys[type] = keyNames.filter((key) => {
                 if (filterNames[type].length == 0) {
@@ -124,6 +130,7 @@
                     <input
                         type="radio"
                         id={quality}
+                        value={quality}
                         bind:group={filterNames.quality}
                         on:click={(event) => {
                             if (lastClicked.quality === event.target) {
@@ -145,6 +152,7 @@
                     <input
                         type="checkbox"
                         id={color}
+                        value={color}
                         bind:group={filterNames.color}
                         on:change={searchFunc}
                     /><label for={color}>
@@ -158,6 +166,7 @@
                         <input
                             type="radio"
                             id={type}
+                            value={type}
                             bind:group={filterNames.type}
                             on:click={(event) => {
                                 if (lastClicked.type === event.target) {
@@ -182,6 +191,7 @@
                         <input
                             type="radio"
                             id={type}
+                            value={type}
                             bind:group={filterNames.type}
                             on:click={(event) => {
                                 if (lastClicked.type === event.target) {
@@ -238,7 +248,8 @@
                 href="http://etg-xd.wikidot.com/{(key + pagename == 'Resourceful Ratboss' ||
                 key + pagename == 'Blocknerboss' ||
                 key + pagename == 'Shotgrubenemy' ||
-                key + pagename == 'Winchesternpc'
+                key + pagename == 'Winchesternpc' ||
+                key + pagename == 'Grey Mausernpc'
                     ? key + '-' + pagename
                     : key
                 )
