@@ -4,7 +4,7 @@
     import pinyin from "tiny-pinyin";
 
     const pagename: string = $page.params.filename;
-    const imgServer: string = "https://7bye.com/hoah/i/etg/";
+    const imgServer: string = "https://7bye.com/hoah/i/etg";
 
     let keyNames: string[] = [];
     let searchText: string = "";
@@ -123,9 +123,7 @@
                 {#each ["S", "A", "B", "C", "D", "N"] as quality}
                     <input
                         type="radio"
-                        name={quality}
                         id={quality}
-                        value={quality}
                         bind:group={filterNames.quality}
                         on:click={(event) => {
                             if (lastClicked.quality === event.target) {
@@ -146,9 +144,7 @@
                 {#each ["black", "brown", "gray", "white", "red", "green", "blue", "yellow", "purple"] as color}
                     <input
                         type="checkbox"
-                        name={color}
                         id={color}
-                        value={color}
                         bind:group={filterNames.color}
                         on:change={searchFunc}
                     /><label for={color}>
@@ -161,9 +157,7 @@
                     {#each ["gun", "bow", "bullet", "fork", "sword", "other"] as type}
                         <input
                             type="radio"
-                            name={type}
                             id={type}
-                            value={type}
                             bind:group={filterNames.type}
                             on:click={(event) => {
                                 if (lastClicked.type === event.target) {
@@ -187,9 +181,7 @@
                     {#each ["heart", "bullet", "ring", "ammolet", "rect", "bottle", "shoe", "circle", "other"] as type}
                         <input
                             type="radio"
-                            name={type}
                             id={type}
-                            value={type}
                             bind:group={filterNames.type}
                             on:click={(event) => {
                                 if (lastClicked.type === event.target) {
@@ -230,22 +222,26 @@
         >
             <div class="icon">
                 <img
-                    src="{imgServer}{fileData(pagename)[key].icon == undefined
+                    src="{imgServer}/{(fileData(pagename)[key].icon == undefined
                         ? fileData(pagename)[key].local_icon == undefined
                             ? ''
-                            : fileData(pagename)
-                                  [key].local_icon.replace(/(%[0-9]{2})/g, '-')
-                                  .replace(/\.+|(\-\.)/g, '.')
-                                  .replace(/(\/)\-/g, '$1')
-                        : fileData(pagename)
-                              [key].icon.replace(/(%[0-9]{2})/g, '-')
-                              .replace(/\.+|(\-\.)/g, '.')
-                              .replace(/(\/)\-/g, '$1')}"
+                            : fileData(pagename)[key].local_icon
+                        : fileData(pagename)[key].icon
+                    )
+                        .replace(/(%[0-9]{2})/g, '-')
+                        .replace(/\.+|(\-\.)/g, '.')
+                        .replace(/(\/)\-/g, '$1')}"
                     alt={fileData(pagename)[key].name}
                 />
             </div>
             <a
-                href="http://etg-xd.wikidot.com/{key
+                href="http://etg-xd.wikidot.com/{(key + pagename == 'Resourceful Ratboss' ||
+                key + pagename == 'Blocknerboss' ||
+                key + pagename == 'Shotgrubenemy' ||
+                key + pagename == 'Winchesternpc'
+                    ? key + '-' + pagename
+                    : key
+                )
                     .replace(/[.'!&\-\\/\(\)\+ ]+/g, '-')
                     .toLowerCase()}"
                 target="_blank"
