@@ -50,10 +50,7 @@
         resetKeys();
         let searchTextPinyin: string = pinyin.convertToPinyin(searchText, undefined, true);
         let searchKeys: string[] = keyNames.filter((key) => {
-            let localeName: string =
-                fileData(pagename)[key].locale.name == undefined
-                    ? ""
-                    : fileData(pagename)[key].locale.name;
+            let localeName: string = fileData(pagename)[key].locale.name || "";
             let pinyinName: string = pinyin.convertToPinyin(localeName, undefined, true);
             if (
                 key.toLowerCase().includes(searchTextPinyin.toLowerCase()) ||
@@ -232,11 +229,10 @@
         >
             <div class="icon">
                 <img
-                    src="{imgServer}/{(fileData(pagename)[key].icon == undefined
-                        ? fileData(pagename)[key].local_icon == undefined
-                            ? ''
-                            : fileData(pagename)[key].local_icon
-                        : fileData(pagename)[key].icon
+                    src="{imgServer}/{(
+                        fileData(pagename)[key].icon ||
+                        fileData(pagename)[key].local_icon ||
+                        ''
                     )
                         .replace(/(%[0-9]{2})/g, '-')
                         .replace(/\.+|(\-\.)/g, '.')
@@ -245,11 +241,16 @@
                 />
             </div>
             <a
-                href="http://etg-xd.wikidot.com/{(key + pagename == 'Resourceful Ratboss' ||
-                key + pagename == 'Blocknerboss' ||
-                key + pagename == 'Shotgrubenemy' ||
-                key + pagename == 'Winchesternpc' ||
-                key + pagename == 'Grey Mausernpc'
+                href="http://etg-xd.wikidot.com/{([
+                    'Resourceful Rat boss',
+                    'Blockner boss',
+                    'Shotgrub enemy',
+                    'Winchester npc',
+                    'Grey Mauser npc',
+                    'Junk shrine',
+                    'Beholder shrine',
+                    'Companion shrine'
+                ].includes(key + ' ' + pagename)
                     ? key + '-' + pagename
                     : key
                 )
@@ -257,9 +258,7 @@
                     .toLowerCase()}"
                 target="_blank"
                 rel="noopener noreferrer"
-                >{fileData(pagename)[key].locale.name == undefined
-                    ? fileData(pagename)[key].name
-                    : fileData(pagename)[key].locale.name}</a
+                >{fileData(pagename)[key].locale.name || fileData(pagename)[key].name}</a
             >
         </div>
     {/each}
