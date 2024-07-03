@@ -220,47 +220,51 @@
 
 <div class="item-block-container {pagename}">
     {#each keyNames as key}
-        <div
-            class="item-block {fileData(pagename)[key].colors == undefined
-                ? ''
-                : fileData(pagename)[key].colors.split(',')[
-                      Math.floor(Math.random() * fileData(pagename)[key].colors.split(',').length)
-                  ]}"
-        >
-            <div class="icon">
-                <img
-                    src="{imgServer}/{(
-                        fileData(pagename)[key].icon ||
-                        fileData(pagename)[key].local_icon ||
-                        ''
-                    )
-                        .replace(/(%[0-9]{2})/g, '-')
-                        .replace(/\.+|(\-\.)/g, '.')
-                        .replace(/(\/)\-/g, '$1')}"
-                    alt={fileData(pagename)[key].name}
-                />
-            </div>
-            <a
-                href="http://etg-xd.wikidot.com/{([
-                    'Resourceful Rat boss',
-                    'Blockner boss',
-                    'Shotgrub enemy',
-                    'Winchester npc',
-                    'Grey Mauser npc',
-                    'Junk shrine',
-                    'Beholder shrine',
-                    'Companion shrine'
-                ].includes(key + ' ' + pagename)
-                    ? key + '-' + pagename
-                    : key
-                )
-                    .replace(/[.'!&\-\\/\(\)\+ ]+/g, '-')
-                    .toLowerCase()}"
-                target="_blank"
-                rel="noopener noreferrer"
-                >{fileData(pagename)[key].locale.name || fileData(pagename)[key].name}</a
+        {#if fileData(pagename)[key]?.hidden != 1}
+            <div
+                class="item-block {fileData(pagename)[key].colors == undefined
+                    ? ''
+                    : fileData(pagename)[key].colors.split(',')[
+                          Math.floor(
+                              Math.random() * fileData(pagename)[key].colors.split(',').length
+                          )
+                      ]}"
             >
-        </div>
+                <div class="icon">
+                    <img
+                        src="{imgServer}/{(
+                            fileData(pagename)[key].icon ||
+                            fileData(pagename)[key].local_icon ||
+                            ''
+                        )
+                            .replace(/(%[0-9]{2})/g, '-')
+                            .replace(/\.+|(\-\.)/g, '.')
+                            .replace(/(\/)\-/g, '$1')}"
+                        alt={fileData(pagename)[key].name}
+                    />
+                </div>
+                <a
+                    href="http://etg-xd.wikidot.com/{([
+                        'Resourceful Rat boss',
+                        'Blockner boss',
+                        'Shotgrub enemy',
+                        'Winchester npc',
+                        'Grey Mauser npc',
+                        'Junk shrine',
+                        'Beholster shrine',
+                        'Companion shrine'
+                    ].includes(key + ' ' + pagename)
+                        ? key + '-' + pagename
+                        : key
+                    )
+                        .replace(/[.'!&\-\\/\(\)\+ ]+/g, '-')
+                        .toLowerCase()}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{fileData(pagename)[key].locale.name || fileData(pagename)[key].name}</a
+                >
+            </div>
+        {/if}
     {/each}
 </div>
 

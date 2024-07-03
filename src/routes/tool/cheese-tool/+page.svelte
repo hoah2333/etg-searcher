@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Header from "../header.svelte";
     import { onMount } from "svelte";
     import cookie from "js-cookie";
     const imgServer: string = "https://7bye.com/hoah/i/etg";
@@ -8,7 +9,7 @@
     let cheeseSize: number = 0;
 
     onMount(() => {
-        let cheeseCookie: string = cookie.get("cheeseTool") || "{}";;
+        let cheeseCookie: string = cookie.get("cheeseTool") || "{}";
         let sizeCookie = cookie.get("cheeseSize") || "0";
 
         if (cheeseCookie == "{}") {
@@ -52,16 +53,13 @@
 
     function setCookie() {
         cookie.set("cheeseTool", JSON.stringify(cheese), { path: "/" });
-        cookie.set("cheeseSize", cheeseSize.toString(), { path: "/" })
+        cookie.set("cheeseSize", cheeseSize.toString(), { path: "/" });
     }
 </script>
 
-<div class="header">
-    <img src="{imgServer}/list-header.png" alt="list header" />
-    <h3>奶酪记录器<span class="eng">Cheese Tool</span></h3>
-</div>
+<Header cn="奶酪记录器" en="Cheese Tool" />
 
-<div class="cheeseContainer">
+<div class="cheese-container">
     {#each cheese as cheeses}
         <input
             type="checkbox"

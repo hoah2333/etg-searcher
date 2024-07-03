@@ -1,26 +1,4 @@
-.header {
-    display: flex;
-    position: relative;
-    margin: 0.5rem 0 2rem 0;
-
-    h3 {
-        position: absolute;
-        margin: 0;
-        left: 50%;
-        top: -0.75rem;
-        translate: -50%;
-        background-color: #a8a59e;
-        padding: 0.5rem;
-
-        .eng {
-            font-size: 0.8rem;
-            padding-left: 0.5rem;
-            color: #666;
-        }
-    }
-}
-
-.cheeseContainer {
+.cheese-container {
     display: flex;
     gap: 0.25rem;
 

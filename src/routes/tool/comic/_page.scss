@@ -1,0 +1,31 @@
+.comic-container {
+    img {
+        max-height: 85vh;
+    }
+
+    .switch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        button {
+            background-color: transparent;
+            border: none;
+
+            &.prev {
+                rotate: 90deg;
+            }
+
+            &.next {
+                rotate: -90deg;
+            }
+
+            img {
+                min-width: 1.5rem;
+                image-rendering: pixelated;
+            }
+        }
+    }
+}
