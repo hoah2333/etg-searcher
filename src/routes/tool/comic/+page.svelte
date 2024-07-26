@@ -1,7 +1,7 @@
 <script lang="ts">
     import Header from "../header.svelte";
 
-    const imgServer: string = "https://7bye.com/hoah/i/etg";
+    const imgServer: string = "https://website.xdcdn.net/game-files/etg-xd/Enter_the_Gungeon/images";
     const comicTotal: number = 42;
     let comicId: number = 1;
 </script>

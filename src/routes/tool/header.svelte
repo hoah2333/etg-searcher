@@ -1,5 +1,5 @@
 <script lang="ts">
-    const imgServer: string = "https://7bye.com/hoah/i/etg";
+    const imgServer: string = "https://website.xdcdn.net/game-files/etg-xd/Enter_the_Gungeon/images";
     export let cn: string, en: string;
 </script>
 

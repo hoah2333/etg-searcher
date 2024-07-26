@@ -4,7 +4,7 @@
     import pinyin from "tiny-pinyin";
 
     const pagename: string = $page.params.filename;
-    const imgServer: string = "https://7bye.com/hoah/i/etg";
+    const imgServer: string = "https://website.xdcdn.net/game-files/etg-xd/Enter_the_Gungeon/images";
 
     let keyNames: string[] = [];
     let searchText: string = "";
@@ -237,9 +237,9 @@
                             fileData(pagename)[key].local_icon ||
                             ''
                         )
-                            .replace(/(%[0-9]{2})/g, '-')
+                            .replace(/%[0-9]{2}/g, '-')
                             .replace(/\.+|(\-\.)/g, '.')
-                            .replace(/(\/)\-/g, '$1')}"
+                            .replace(/\/\-/g, '/')}"
                         alt={fileData(pagename)[key].name}
                     />
                 </div>

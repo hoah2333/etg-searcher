@@ -2,7 +2,7 @@
     import Header from "../header.svelte";
     import { onMount } from "svelte";
     import cookie from "js-cookie";
-    const imgServer: string = "https://7bye.com/hoah/i/etg";
+    const imgServer: string = "https://website.xdcdn.net/game-files/etg-xd/Enter_the_Gungeon/images";
 
     let cheese: { index: number; direction: number; checked: boolean }[] = [];
     let isEditing: boolean = false;
