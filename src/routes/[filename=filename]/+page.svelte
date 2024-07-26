@@ -4,7 +4,8 @@
     import pinyin from "tiny-pinyin";
 
     const pagename: string = $page.params.filename;
-    const imgServer: string = "https://website.xdcdn.net/game-files/etg-xd/Enter_the_Gungeon/images";
+    const imgServer: string =
+        "https://website.xdcdn.net/game-files/etg-xd/Enter_the_Gungeon/images";
 
     let keyNames: string[] = [];
     let searchText: string = "";
@@ -232,14 +233,9 @@
             >
                 <div class="icon">
                     <img
-                        src="{imgServer}/{(
-                            fileData(pagename)[key].icon ||
+                        src="{imgServer}/{fileData(pagename)[key].icon ||
                             fileData(pagename)[key].local_icon ||
-                            ''
-                        )
-                            .replace(/%[0-9]{2}/g, '-')
-                            .replace(/\.+|(\-\.)/g, '.')
-                            .replace(/\/\-/g, '/')}"
+                            ''}"
                         alt={fileData(pagename)[key].name}
                     />
                 </div>
