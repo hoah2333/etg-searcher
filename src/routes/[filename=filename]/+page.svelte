@@ -17,7 +17,7 @@
         type: []
     };
 
-    let pagenameDesc: string = (() => {
+    let pagenameDesc: string = ((): string => {
         switch (pagename) {
             case "gungeoneer":
                 return "角色";
@@ -40,17 +40,17 @@
 
     resetKeys();
 
-    function resetKeys() {
+    function resetKeys(): void {
         keyNames = [];
         for (let key in fileData(pagename)) {
             keyNames.push(key);
         }
     }
 
-    function searchFunc() {
+    function searchFunc(): void {
         resetKeys();
         let searchTextPinyin: string = pinyin.convertToPinyin(searchText, undefined, true);
-        let searchKeys: string[] = keyNames.filter((key) => {
+        let searchKeys: string[] = keyNames.filter((key: string): string => {
             let localeName: string = fileData(pagename)[key].locale.name || "";
             let pinyinName: string = pinyin.convertToPinyin(localeName, undefined, true);
             if (
@@ -79,13 +79,18 @@
          * @param type refers to keys in filterKeys ("quality" || "color" || "type")
          * @param fileType refers to keys in files ("quality" || "colors" || "shapes")
          */
-        function keyFilter(type: string, fileType: string) {
-            filterKeys[type] = keyNames.filter((key) => {
+        function keyFilter(
+            type: "quality" | "color" | "type",
+            fileType: "quality" | "colors" | "shapes"
+        ) {
+            filterKeys[type] = keyNames.filter((key: string): string => {
                 if (filterNames[type].length == 0) {
                     return key;
-                } else if (fileData(pagename)[key][fileType] == undefined) {
+                } else if (fileData(pagename)[key][fileType] === undefined) {
                     return "";
-                } else if (fileData(pagename)[key][fileType].includes(filterNames[type])) {
+                } else if (
+                    filterNames[type].includes(fileData(pagename)[key][fileType] as string)
+                ) {
                     return key;
                 } else {
                     return "";
@@ -93,7 +98,7 @@
             });
         }
         keyNames = searchKeys.filter(
-            (key) =>
+            (key: string): boolean =>
                 filterKeys.quality.includes(key) &&
                 filterKeys.color.includes(key) &&
                 filterKeys.type.includes(key)
@@ -116,7 +121,7 @@
     {/if}
     <input
         class="search-box"
-        placeholder="强大的名字过滤器"
+        placeholder="强大的名字过滤器（搜索）"
         type="text"
         bind:value={searchText}
         on:input={searchFunc}
@@ -223,13 +228,9 @@
     {#each keyNames as key}
         {#if fileData(pagename)[key]?.hidden != 1}
             <div
-                class="item-block {fileData(pagename)[key].colors == undefined
+                class="item-block {fileData(pagename)[key].colors === undefined
                     ? ''
-                    : fileData(pagename)[key].colors.split(',')[
-                          Math.floor(
-                              Math.random() * fileData(pagename)[key].colors.split(',').length
-                          )
-                      ]}"
+                    : fileData(pagename)[key].colors?.split(',')[0]}"
             >
                 <div class="icon">
                     <img
@@ -240,7 +241,7 @@
                     />
                 </div>
                 <a
-                    href="http://etg-xd.wikidot.com/{([
+                    href="https://etg-xd.wikidot.com/{([
                         'Resourceful Rat boss',
                         'Blockner boss',
                         'Shotgrub enemy',

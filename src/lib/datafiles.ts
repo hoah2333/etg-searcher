@@ -9,13 +9,55 @@ import item from "./data/item";
 import npc from "./data/npc";
 import page from "./data/page";
 import pickup from "./data/pickup";
-import quality from "./data/quality";
 import room from "./data/room";
 import shrine from "./data/shrine";
-import synergy from "./data/synergy";
 import system from "./data/system";
 
-const datas: any = {
+export type DataType = {
+    id?: number;
+    name: string;
+    icon?: string;
+    local_icon?: string;
+    quality?: string;
+    type?: string;
+    magazine_size?: string | number;
+    ammo_capacity?: string | number;
+    damage?: string | number;
+    fire_rate?: string | number;
+    reload_time?: string | number;
+    shot_speed?: string | number;
+    range?: string | number;
+    force?: string | number;
+    spread?: string | number;
+    dataType?: string;
+    locale: {
+        type?: string;
+        name?: string;
+        base_health?: string | number;
+        dps_cap?: number;
+        tips?: string;
+        notes?: string;
+        keyword?: string;
+        unlock?: string;
+    };
+    sell?: number;
+    synergy?: string[];
+    colors?: string;
+    shapes?: string;
+    hidden?: number;
+};
+
+const fileDatas: Record<string, Record<string, DataType>> = {
+    boss,
+    enemy,
+    gun,
+    gungeoneer,
+    item,
+    npc,
+    shrine
+};
+
+const allDatas: Record<string, Record<string, DataType>> = {
     boss,
     chamber,
     chest,
@@ -27,13 +69,15 @@ const datas: any = {
     npc,
     page,
     pickup,
-    quality,
     room,
     shrine,
-    synergy,
-    system,
+    system
+};
+
+export function fileData(name: string): Record<string, DataType> {
+    return fileDatas[name];
 }
 
-export function fileData(name: string): any {
-    return datas[name]
+export function allData(): Record<string, Record<string, DataType>> {
+    return allDatas;
 }
